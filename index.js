@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 const MONGO_URL = process.env.MONGO_URL;
 
 export const client = await createConnection();
