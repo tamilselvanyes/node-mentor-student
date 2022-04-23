@@ -225,7 +225,7 @@ app.post("/assignmentor", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => console.log(`Server started ${PORT}`));
+app.listen(process.env.PORT, () => console.log(`Server started ${PORT}`));
 
 //Very important code for mongo connection always just as it is.......
 
