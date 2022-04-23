@@ -66,7 +66,7 @@ app.get("/students", async (req, res) => {
 });
 
 //API to assign the students to mentors by mentor name
-//{"mentorname":"Chandrasekhar" , "students":[{"name":"Ram"},{"name":"Gopinath"}]}
+//{"mentorname":"Chandrasekhar" , "students":[{"name":"Ram"},{"name":"Gopi"}]}
 
 app.post("/assignstudents", async (req, res) => {
   const data = req.body;
