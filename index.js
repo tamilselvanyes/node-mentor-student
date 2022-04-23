@@ -45,7 +45,7 @@ app.get("/mentors", async (req, res) => {
 });
 
 //API to create student
-// {"name":"Gopinath","course":"Full Stack Development"}
+// {"name":"Gopi","course":"Full Stack Development"}
 
 app.post("/createstudent", async (req, res) => {
   const data = req.body;
