@@ -8,7 +8,7 @@ import { ObjectId } from "mongodb";
 const app = express();
 dotenv.config();
 
-//middleware --> Intercept --> Body to JSON
+//middleware --> Intercept  --> Body to JSON
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
@@ -19,7 +19,7 @@ const MONGO_URL = process.env.MONGO_URL;
 export const client = await createConnection();
 
 app.get("/", function (req, res) {
-  res.send("This is my backend");
+  res.send("This is backend of mentor and student database");
 });
 
 // //eg:API to create mentor
@@ -65,7 +65,7 @@ app.get("/students", async (req, res) => {
   res.send(data);
 });
 
-//API to assign the students to mentors by mentor name
+//API to assign the  multiple students to mentors by mentor name
 //{"mentorname":"Chandrasekhar" , "students":[{"name":"Ram"},{"name":"Gopi"}]}
 
 app.post("/assignstudents", async (req, res) => {
@@ -119,7 +119,7 @@ app.post("/assignstudents", async (req, res) => {
   res.send({ message: response });
 });
 
-//API to edit the mentor by student student
+//API to edit the mentor by student
 //{"student_name":"Ram","mentor":"Dinesh"}
 
 app.put("/editmentorbyStudent", async (req, res) => {
@@ -172,6 +172,8 @@ app.put("/editmentorbyStudent", async (req, res) => {
   }
 });
 
+//API to assign mentor to student
+// {"student_name":"Ajay","mentor":"Sai Mohan"}
 app.post("/assignmentor", async (req, res) => {
   const data = req.body;
   const mentor = await getMentorByName(data.mentor);
