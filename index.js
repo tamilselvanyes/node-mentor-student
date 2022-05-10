@@ -3,8 +3,19 @@ import { MongoClient } from "mongodb";
 import dotenv from "dotenv";
 import cors from "cors";
 import bodyParser from "body-parser";
-import { ObjectId } from "mongodb";
-
+import {
+  getMentorsData,
+  createMentor,
+  getStudentsData,
+  createStudent,
+  getMentorByName,
+  getStudentByName,
+  updateMentorAssign,
+  updateStudentmentor,
+  getMentorByStudentName,
+  createroom,
+  bookroom,
+} from "./helper.js";
 const app = express();
 dotenv.config();
 
@@ -227,6 +238,23 @@ app.post("/assignmentor", async (req, res) => {
   }
 });
 
+//HALL BOOKING  INFORMATION STARTS HERE
+
+//API to create room
+
+app.post("/createroom", async (req, res) => {
+  const data = req.body;
+  const response = await createroom(data);
+  res.send(response);
+});
+
+app.post("/bookroom", async (req, res) => {
+  const data = req.body;
+
+  const response = await bookroom(data);
+  res.send(response);
+});
+
 app.listen(process.env.PORT, () => console.log(`Server started ${PORT}`));
 
 //Very important code for mongo connection always just as it is.......
@@ -236,58 +264,4 @@ async function createConnection() {
   await client.connect();
   console.log("Mongo is connected ✌️😊");
   return client;
-}
-
-function getMentorsData() {
-  return client.db("b30wd").collection("mentors").find({}).toArray();
-}
-
-function createMentor(data) {
-  return client.db("b30wd").collection("mentors").insertOne(data);
-}
-
-function getStudentsData() {
-  return client.db("b30wd").collection("students").find({}).toArray();
-}
-
-function createStudent(data) {
-  return client.db("b30wd").collection("students").insertOne(data);
-}
-
-function getMentorByName(name) {
-  return client.db("b30wd").collection("mentors").findOne({ name: name });
-}
-
-function getStudentByName(name) {
-  return client.db("b30wd").collection("students").findOne({ name: name });
-}
-
-function updateMentorAssign(user_id, updateData) {
-  return client
-    .db("b30wd")
-    .collection("mentors")
-    .updateOne({ _id: ObjectId(user_id) }, { $set: updateData });
-}
-
-function updateStudentmentor(user_id, updateData) {
-  return client
-    .db("b30wd")
-    .collection("students")
-    .updateOne({ _id: ObjectId(user_id) }, { $set: updateData });
-}
-
-async function getMentorByStudentName(studentname) {
-  const mentors = await getMentorsData();
-  if (mentors !== null) {
-    for (let i = 0; i < mentors.length; i++) {
-      if (mentors[i].mentorFor !== null) {
-        for (let j = 0; j < mentors[i].mentorFor.length; j++) {
-          if (mentors[i].mentorFor[j].name === studentname) {
-            return { oldmentor: mentors[i], index: j };
-          }
-        }
-      }
-    }
-  }
-  return { oldmentor: null, index: null };
 }
