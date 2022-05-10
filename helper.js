@@ -1,4 +1,5 @@
 import { ObjectId } from "mongodb";
+import { client } from "./index.js";
 
 export function getMentorsData() {
   return client.db("b30wd").collection("mentors").find({}).toArray();
